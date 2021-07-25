@@ -14,7 +14,7 @@ Este projeto implementa um simples termo de consentimento para a LGPD.
 
 # Instalação
 
-Copiar os arquivos ```lgpd-termo.css``` (por exemplo, ```css```) e  ```lgpdTermo.js``` (por exemplo, ```js```) para pastas da aplicação.
+Copiar os arquivos ```versao/css/lgpd-termo.css``` (por exemplo, ```css```) e  ```versao/js/lgpdTermo.js``` (por exemplo, ```js```) para pastas da aplicação.
 
 _Exemplo de configuração para o arquivo css:_
 
