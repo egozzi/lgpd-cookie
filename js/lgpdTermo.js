@@ -3,7 +3,7 @@
  *
  * Description. Biblioteca para tratamento do termo de consentimento guardando os dados apenas localmente.
  *
- * @version 1.0
+ * @version 1.1
  * @link   https://github.com/egozzi/lgpd-cookie.git
  * @author Erico Murilo Gozzi
  * @license	LGPL-3.0-or-later
