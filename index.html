@@ -59,6 +59,7 @@
 
 <form>
   <input id="botaoTeste" type="submit" value="Autenticar">
+  <input id="botaoTeste2" type="submit" value="AutenticarNaoMonitorado">
 </form>
 
     <article>
@@ -239,7 +240,7 @@
           non, egestas dui.</p>
       </div>
       <div class="lgpd-botao-div">
-        <a id="lgpd-botao" href="#" onclick="lgpdCliqueTermo();">OK</a>
+        <a id="lgpd-botao" href="#">OK</a>
       </div>
     </div>
     </div>
@@ -257,9 +258,8 @@
 
   <script type="text/javascript">    
   window.onload = function (){
-    console.log('Pagina carregou');
-    lgpdIniciarTermo();
-    monitorarElemento('botaoTeste');
+    termoConsentimentoLgpd.iniciarTermo("OUTRO-TERMO");
+    termoConsentimentoLgpd.monitorarElemento('botaoTeste');
   };  
 </script>
   

@@ -8,65 +8,90 @@
  * @author Erico Murilo Gozzi
  * @license	LGPL-3.0-or-later
  */
- 
+
 /** jshint {inline configuration here} */
 
-var CHAVE_COOKIE = "LGPD.TERMO";
+const termoConsentimentoLgpd = (function () {
 
-function lgpdIniciarTermo(){
-    
-    if (aceitouTermo()){
+  let CHAVE_TERMO = "LGPD.TERMO";
+
+  const iniciarComponente = function (chaveTermo) {
+
+    if (chaveTermo)
+        CHAVE_TERMO = chaveTermo;
+
+    var botaoTermo = document.getElementById("lgpd-botao");
+
+    if (botaoTermo) {
+
+        botaoTermo.onclick = lgpdCliqueTermo;
+
+      if (aceitouTermo()) {
         lgpdDesativaTermo();
+      }
+    } else {
+      console.error("[COMPONENTE CONSENTIMENTO LGPD] Botão do termo não encontrado na página. Funcionalidade não funcionará adequadamente");
     }
-}
+  };
 
-function lgpdCliqueTermo(){
+  const lgpdCliqueTermo = function () {
 
-   setCookie(CHAVE_COOKIE, "OK");
+    let dataAceite = dataAtual();
+    setCookie(CHAVE_TERMO, "Aceito em " + dataAceite);
 
-   lgpdDesativaTermo();
-}
+    lgpdDesativaTermo();
+  };
 
-function monitorarElemento(id, callbackOk, callbackNOk){
+  const monitorarElemento = function (id, callbackOk, callbackNOk) {
     var elemento = document.getElementById(id);
 
-    if (elemento){
-        elemento.addEventListener('click', function(){
-
-            if (!aceitouTermo()){
-                if (callbackNOk){
-                    callbackNOk();
-                } else {
-                    alert('Você deve aceitar o termo de consentimento para realizar esta operação');
-                }               
-                return false;
-            } else {
-                if (callbackOk){
-                    callbackOk();
-                }
-            }
-        });
+    if (elemento) {
+      elemento.addEventListener("click", function () {
+        if (!aceitouTermo()) {
+          if (callbackNOk) {
+            callbackNOk();
+          } else {
+            alert(
+              "Você deve aceitar o termo de consentimento para realizar esta operação"
+            );
+          }
+          return false;
+        } else {
+          if (callbackOk) {
+            callbackOk();
+          }
+        }
+      });
     }
+  };
 
-}
+  function aceitouTermo() {
+    return getCookie(CHAVE_TERMO) != null;
+  }
 
-function aceitouTermo(){
+  function lgpdDesativaTermo() {
+    const termo = document.getElementById("lgpd-termo");
+    termo.style.display = "none";
+  }
 
-    console.log(getCookie(CHAVE_COOKIE));
-    console.log(getCookie(CHAVE_COOKIE) != null);
-
-    return getCookie(CHAVE_COOKIE) != null;
-}
-
-function lgpdDesativaTermo(){
-    const termo = document.getElementById('lgpd-termo');
-    termo.style.display = 'none';
-}
-
-function getCookie(k){
+  function getCookie(k) {
     return localStorage.getItem(k);
-}
+  }
 
-function setCookie(k, v) {
+  function setCookie(k, v) {
     localStorage.setItem(k, v);
-}
+  }
+
+  function dataAtual(){
+
+    var d = new Date();
+
+    return d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + " " 
+         + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+  } 
+
+  return {
+    iniciarTermo: iniciarComponente,
+    monitorarElemento: monitorarElemento,
+  };
+})();
